@@ -6,14 +6,19 @@ Premier League clubs, pulls lineups and goal details for finished games,
 and merges everything into data/matches.json (the same schema the
 Claude artifact tracker uses).
 
-Designed to run unattended on a schedule (GitHub Actions) or locally:
+Designed to run unattended on a schedule (GitHub Actions) or locally.
+Every run scans the entire summer window (1 July - 20 August), so the
+complete announced fixture list is always on file and results fill in as
+games are played. Per-match detail fetches (lineups, scorers) happen only
+where something is new, changed, recent, or still missing, so runs stay
+light. Fixtures that vanish from the feed are pruned only after a fully
+clean scan; played matches are never deleted, and missed runs self-heal.
 
-    python pipeline/update.py               # incremental (last 3 days + next 10)
-    python pipeline/update.py --backfill    # full summer, 1 July onwards
+    python pipeline/update.py               # normal run
+    python pipeline/update.py --backfill    # force re-fetch of all details
 
-The script never deletes matches it isn't re-scanning, degrades
-gracefully when ESPN omits a field, and only exits non-zero if the
-feed is completely unreachable.
+The script degrades gracefully when ESPN omits a field and only exits
+non-zero if the feed is completely unreachable.
 """
 
 from __future__ import annotations
@@ -34,8 +39,8 @@ LONDON = ZoneInfo("Europe/London")
 
 PRESEASON_START = date(2026, 7, 1)
 SEASON_OPENER = date(2026, 8, 21)  # 2026/27 Premier League kicks off
-DEFAULT_LOOKBACK = 3               # re-scan recent days (late lineups, corrections)
-DEFAULT_LOOKAHEAD = 10             # pick up newly announced fixtures
+DEFAULT_LOOKBACK = 3               # always refresh details for matches this recent
+STRAGGLER_DAYS = 14                # keep retrying missing lineups/goals this long
 
 # ESPN display names (normalised) -> the short names used in the tracker.
 PL_CLUBS = {
@@ -335,21 +340,43 @@ def enrich(match: dict) -> None:
 # main flow
 # --------------------------------------------------------------------------
 
-def collect(window_start: date, window_end: date) -> tuple[list, int, int]:
-    """Scan the scoreboard day by day; return (matches, days_ok, days_failed)."""
-    matches, ok, failed = [], 0, 0
+def collect(window_start: date, window_end: date) -> tuple[list, int]:
+    """Scan the scoreboard day by day; return (matches, failed_day_count)."""
+    matches, failed = [], 0
     for day in daterange(window_start, window_end):
         data = get_json(f"{BASE}/scoreboard", params={"dates": day.strftime("%Y%m%d")})
         if data is None:
             failed += 1
             continue
-        ok += 1
         for event in data.get("events") or []:
             skeleton = build_skeleton(event)
             if skeleton:
                 matches.append(skeleton)
         time.sleep(0.25)  # be polite
-    return matches, ok, failed
+    return matches, failed
+
+
+def needs_details(skel: dict, stored: dict | None, today: date,
+                  lookback: int, backfill: bool) -> bool:
+    """Decide whether a finished match is worth a summary fetch this run."""
+    if not skel["_espn"]["finished"]:
+        return False
+    if backfill or stored is None or stored.get("homeScore") is None:
+        return True  # forced, brand new, or newly finished
+    if (stored.get("homeScore"), stored.get("awayScore")) != (
+        skel["homeScore"], skel["awayScore"]
+    ):
+        return True  # upstream score correction
+    try:
+        age = (today - date.fromisoformat(skel["date"])).days
+    except ValueError:
+        return True
+    if age <= lookback:
+        return True  # fresh: lineups and details often land late
+    missing_xi = not (stored.get("homeLineup") and stored.get("awayLineup"))
+    expected = (skel["homeScore"] or 0) + (skel["awayScore"] or 0)
+    missing_goals = expected > 0 and len(stored.get("goals") or []) < expected
+    return (missing_xi or missing_goals) and age <= STRAGGLER_DAYS
 
 
 def run(args) -> int:
@@ -362,36 +389,77 @@ def run(args) -> int:
             print("! existing data file unreadable, starting fresh", file=sys.stderr)
     by_id = {m["id"]: m for m in existing.get("matches", [])}
 
-    today = datetime.now(LONDON).date()
-    window_end = min(today + timedelta(days=args.lookahead), SEASON_OPENER - timedelta(days=1))
-    if args.backfill or not by_id:
-        window_start = PRESEASON_START
-    else:
-        window_start = max(today - timedelta(days=args.lookback), PRESEASON_START)
-
-    if window_start > window_end:
+    override = getattr(args, "today", None)
+    today = date.fromisoformat(override) if override else datetime.now(LONDON).date()
+    window_start = PRESEASON_START
+    window_end = SEASON_OPENER - timedelta(days=1)
+    if today > window_end + timedelta(days=7):
         print("Pre-season window has passed - nothing to scan.")
         return 0
 
     print(f"Scanning club friendlies {window_start} .. {window_end}")
-    scanned, days_ok, days_failed = collect(window_start, window_end)
-    if days_ok == 0:
+    scanned, days_failed = collect(window_start, window_end)
+    total_days = (window_end - window_start).days + 1
+    if days_failed >= total_days:
         print("All scoreboard requests failed - is the feed down?", file=sys.stderr)
         return 1
 
-    new = updated = with_xi = 0
+    # the same event can surface twice around midnight buckets; keep the latest
+    scanned = list({m["id"]: m for m in scanned}.values())
+
+    seen_ids, new, updated, fetched, carried, with_xi = set(), 0, 0, 0, 0, 0
     for match in scanned:
-        if match["_espn"]["finished"]:
+        seen_ids.add(match["id"])
+        stored = by_id.get(match["id"])
+
+        # never let a feed glitch downgrade a stored result back to a fixture
+        if (
+            stored is not None
+            and stored.get("homeScore") is not None
+            and not match["_espn"]["finished"]
+        ):
+            carried += 1
+            continue
+
+        if needs_details(match, stored, today, args.lookback, args.backfill):
             enrich(match)
+            fetched += 1
             time.sleep(0.35)
+        elif stored is not None:  # keep previously gathered detail
+            match["homeLineup"] = stored.get("homeLineup") or []
+            match["awayLineup"] = stored.get("awayLineup") or []
+            match["goals"] = stored.get("goals") or []
+            if not match["note"]:
+                match["note"] = stored.get("note", "")
+            carried += 1
+
         if match["homeLineup"] and match["awayLineup"]:
             with_xi += 1
         match.pop("_espn", None)
-        if match["id"] not in by_id:
+        if stored is None:
             new += 1
-        elif by_id[match["id"]] != match:
+        elif stored != match:
             updated += 1
         by_id[match["id"]] = match
+
+    # prune fixtures that vanished from the feed - only after a fully clean
+    # scan, only unplayed matches, and never hand-added (non-ESPN) records
+    pruned = 0
+    if days_failed == 0:
+        for mid in list(by_id):
+            m = by_id[mid]
+            if not mid.startswith("espn-") or mid in seen_ids:
+                continue
+            if m.get("homeScore") is not None or m.get("awayScore") is not None:
+                continue
+            if window_start.isoformat() <= (m.get("date") or "") <= window_end.isoformat():
+                print(
+                    f"  - removing vanished fixture: {m.get('homeTeam')} v "
+                    f"{m.get('awayTeam')} ({m.get('date')})",
+                    file=sys.stderr,
+                )
+                del by_id[mid]
+                pruned += 1
 
     merged = sorted(by_id.values(), key=lambda m: (m.get("date") or "9999", m["id"]))
     payload = {
@@ -405,8 +473,10 @@ def run(args) -> int:
     out.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n")
 
     print(
-        f"Done: {len(scanned)} PL matches in window ({new} new, {updated} updated, "
-        f"{with_xi} with both XIs), {len(merged)} total on file."
+        f"Done: {len(scanned)} PL matches in feed ({new} new, {updated} updated, "
+        f"{fetched} detail fetches, {carried} carried forward, {with_xi} with both XIs)"
+        + (f", {pruned} vanished fixture(s) removed" if pruned else "")
+        + f", {len(merged)} total on file."
         + (f" {days_failed} day(s) failed to fetch." if days_failed else "")
     )
     return 0
@@ -414,10 +484,16 @@ def run(args) -> int:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--backfill", action="store_true", help="rescan from 1 July 2026")
-    parser.add_argument("--lookback", type=int, default=DEFAULT_LOOKBACK, metavar="DAYS")
-    parser.add_argument("--lookahead", type=int, default=DEFAULT_LOOKAHEAD, metavar="DAYS")
+    parser.add_argument(
+        "--backfill", action="store_true",
+        help="force a fresh detail fetch for every finished match",
+    )
+    parser.add_argument(
+        "--lookback", type=int, default=DEFAULT_LOOKBACK, metavar="DAYS",
+        help="always refresh details for matches this recent",
+    )
     parser.add_argument("--out", default="data/matches.json")
+    parser.add_argument("--today", default=None, help=argparse.SUPPRESS)  # tests
     sys.exit(run(parser.parse_args()))
 
 
