@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PL Pre-Season '26/27</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F4F5F1; --card:#FFFFFF; --ink:#17251C; --muted:#5C6B60;
+    --grass:#1E7A46; --grass-deep:#12502E; --line:#E2E6DF; --soft:#EEF1EA;
+    --chalk:#BFE3CD;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+       font-family:'Archivo',system-ui,sans-serif;font-size:15px;line-height:1.45}
+  .display{font-family:'Oswald','Arial Narrow',sans-serif;font-weight:600;text-transform:uppercase}
+  .tnum{font-variant-numeric:tabular-nums}
+  button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;padding:0}
+  button:focus-visible,select:focus-visible{outline:2px solid var(--grass);outline-offset:2px}
+
+  header{position:relative;overflow:hidden;color:#fff;
+         background:linear-gradient(120deg,var(--grass) 0%,var(--grass-deep) 100%)}
+  header svg{position:absolute;right:0;top:0;height:100%;opacity:.16}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px}
+  .head-inner{position:relative;padding:36px 0 30px}
+  .eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--chalk)}
+  h1{margin:4px 0 0;font-size:clamp(40px,9vw,58px);line-height:.95;letter-spacing:.01em}
+  h1 .yr{color:var(--chalk)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;font-size:13px}
+  .chip{background:rgba(255,255,255,.14);border-radius:999px;padding:5px 12px}
+
+  main{padding:20px 0 60px}
+  .toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+  .seg{display:inline-flex;background:#E9ECE5;border-radius:999px;padding:4px}
+  .seg button{padding:6px 16px;border-radius:999px;font-size:14px;font-weight:500;color:var(--muted)}
+  .seg button.on{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(20,30,24,.12)}
+  .filter{margin-left:auto}
+  select{border:1px solid #DDE2DA;background:#fff;border-radius:10px;
+         padding:7px 10px;font:inherit;font-size:14px;color:var(--ink)}
+
+  .stack{display:flex;flex-direction:column;gap:12px;margin-top:16px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;
+        box-shadow:0 1px 2px rgba(20,30,24,.05);overflow:hidden;transition:box-shadow .15s}
+  .card:hover{box-shadow:0 3px 8px rgba(20,30,24,.08)}
+  .m-row{display:flex;align-items:stretch}
+  .spine{width:6px;flex-shrink:0;display:flex;flex-direction:column}
+  .spine i{flex:1}
+  .m-btn{flex:1;display:flex;align-items:center;justify-content:space-between;
+         gap:16px;text-align:left;padding:12px 18px;min-width:0}
+  .m-date{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .m-team{display:flex;align-items:center;gap:8px;font-weight:600;margin-top:3px;
+          white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;
+       box-shadow:inset 0 0 0 1px rgba(20,30,24,.18)}
+  .dot.sm{width:8px;height:8px}
+  .m-score{text-align:right;flex-shrink:0}
+  .m-score .num{font-family:'Oswald',sans-serif;font-weight:600;font-size:34px;line-height:1;letter-spacing:.02em}
+  .m-score .vs{font-family:'Oswald',sans-serif;font-weight:600;font-size:28px;line-height:1;color:#9AA79E}
+  .m-score .tag{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+  .m-score .tag.fix{display:inline-block;background:var(--soft);border-radius:999px;padding:2px 8px}
+
+  .m-open{border-top:1px solid var(--soft);padding:6px 18px 16px;animation:rise .16s ease-out}
+  @keyframes rise{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+  .sec{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+       font-weight:500;display:flex;align-items:center;gap:8px;margin-top:14px}
+  .goals-list{list-style:none;margin:6px 0 0;padding:0}
+  .goals-list li{display:flex;align-items:baseline;gap:8px;font-size:14px;padding:2px 0}
+  .goals-list .min{width:32px;text-align:right;color:var(--muted);flex-shrink:0}
+  .xi-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:4px}
+  .xi-grid ol{list-style:none;margin:6px 0 0;padding:0;font-size:14px;line-height:1.55}
+  .xi-grid ol li{display:flex;gap:8px}
+  .xi-grid .n{width:20px;text-align:right;color:#B4BEB4}
+  .quiet{color:#9AA79E;font-size:14px;margin:10px 0 4px}
+
+  .club-head{display:flex;align-items:center;gap:8px;padding:10px 18px;
+             background:#FAFBF8;border-bottom:1px solid var(--soft)}
+  .club-head .name{font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;
+                   font-size:17px;letter-spacing:.03em}
+  .club-head .tot{margin-left:auto;font-size:12px;color:var(--muted)}
+  .pad{padding:8px 18px 16px}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+     font-weight:500;text-align:right;padding:6px 8px}
+  th:first-child,td:first-child{text-align:left;padding-left:0}
+  th:last-child,td:last-child{padding-right:0}
+  td{border-top:1px solid var(--soft);padding:6px 8px;text-align:right}
+  td.pl{font-weight:600}
+  td .club-cell{display:flex;align-items:center;gap:6px;color:var(--muted);font-weight:400}
+  .g{font-weight:700}
+
+  .empty{background:var(--card);border:1px solid var(--line);border-radius:16px;
+         padding:36px 20px;text-align:center;margin-top:16px}
+  .empty .display{font-size:20px}
+  .empty p{color:var(--muted);font-size:14px;max-width:420px;margin:8px auto 0}
+
+  footer{margin-top:40px;font-size:12px;color:#9AA79E;display:flex;
+         justify-content:space-between;gap:12px;flex-wrap:wrap}
+  footer a{color:inherit}
+
+  @media (max-width:560px){
+    .xi-grid{grid-template-columns:1fr}
+    .m-btn{padding:12px 14px}
+    .filter{margin-left:0;width:100%}
+    .filter select{width:100%}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <svg viewBox="0 0 300 200" aria-hidden="true">
+    <line x1="150" y1="-20" x2="150" y2="220" stroke="#fff" stroke-width="3"/>
+    <circle cx="150" cy="100" r="62" fill="none" stroke="#fff" stroke-width="3"/>
+    <circle cx="150" cy="100" r="5" fill="#fff"/>
+  </svg>
+  <div class="wrap head-inner">
+    <p class="eyebrow">Premier League &middot; Summer friendlies &middot; auto-updated</p>
+    <h1 class="display">Pre-Season <span class="yr">'26/27</span></h1>
+    <div class="chips" id="chips"></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="toolbar">
+    <div class="seg" role="tablist">
+      <button class="on" data-tab="matches" role="tab" aria-selected="true">Matches</button>
+      <button data-tab="players" role="tab" aria-selected="false">Players</button>
+    </div>
+    <span class="seg" id="players-mode" hidden>
+      <button class="on" data-pmode="byclub">By club</button>
+      <button data-pmode="leaderboard">Leaderboard</button>
+    </span>
+    <label class="filter" id="club-filter-wrap" aria-label="Filter by club">
+      <select id="club-filter"><option value="">All clubs</option></select>
+    </label>
+  </div>
+  <div id="content"></div>
+  <footer>
+    <span id="updated">Loading&hellip;</span>
+    <span>Data: ESPN club friendlies feed &middot; refreshed twice daily</span>
+  </footer>
+</main>
+
+<script>
+"use strict";
+
+/* ------------------------------ club colours --------------------------- */
+const CLUB_COLORS = {
+  arsenal:"#EF0107", astonvilla:"#670E36", villa:"#670E36",
+  bournemouth:"#B50E12", afcbournemouth:"#B50E12", brentford:"#E30613",
+  brighton:"#0057B8", brightonhovealbion:"#0057B8", chelsea:"#034694",
+  coventrycity:"#4DA8DA", coventry:"#4DA8DA", crystalpalace:"#1B458F",
+  palace:"#1B458F", everton:"#003399", fulham:"#111111",
+  hullcity:"#F0A02B", hull:"#F0A02B", ipswichtown:"#0E4CA1", ipswich:"#0E4CA1",
+  leedsunited:"#FFCD00", leeds:"#FFCD00", liverpool:"#C8102E",
+  mancity:"#6CABDD", manchestercity:"#6CABDD",
+  manutd:"#DA291C", manunited:"#DA291C", manchesterunited:"#DA291C",
+  newcastle:"#241F20", newcastleunited:"#241F20",
+  nottinghamforest:"#DD2A2C", forest:"#DD2A2C", sunderland:"#EB172B",
+  tottenham:"#132257", spurs:"#132257", tottenhamhotspur:"#132257",
+  southampton:"#D71920", westham:"#7A263A", westhamunited:"#7A263A",
+  wolves:"#FDB913", wolverhamptonwanderers:"#FDB913", burnley:"#6C1D45"
+};
+const normClub = n => (n || "").trim().toLowerCase().replace(/[^a-z0-9]/g, "");
+const clubColor = n => CLUB_COLORS[normClub(n)] || "#7A8580";
+
+/* ------------------------------ helpers -------------------------------- */
+const esc = s => String(s ?? "").replace(/[&<>"']/g,
+  c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const isPlayed = m => m.homeScore != null || m.awayScore != null;
+const fmtDate = d => {
+  if (!d) return "Date TBC";
+  const dt = new Date(d + "T12:00:00");
+  return isNaN(dt) ? esc(d)
+    : dt.toLocaleDateString("en-GB", { weekday:"short", day:"numeric", month:"short" });
+};
+const dot = (club, sm) =>
+  `<span class="dot${sm ? " sm" : ""}" style="background:${clubColor(club)}"></span>`;
+
+/* ------------------------------ state ---------------------------------- */
+let DATA = { meta:{}, matches:[] };
+const state = { tab:"matches", pmode:"byclub", club:"", open:new Set() };
+
+/* ------------------------------ aggregation ---------------------------- */
+function buildStats(matches){
+  const map = new Map();
+  const bump = (club, player) => {
+    const key = normClub(club) + "|" + player.trim().toLowerCase();
+    if (!map.has(key)) map.set(key, { club, player:player.trim(), starts:0, goals:0, assists:0 });
+    return map.get(key);
+  };
+  for (const m of matches){
+    (m.homeLineup || []).forEach(p => { bump(m.homeTeam, p).starts++; });
+    (m.awayLineup || []).forEach(p => { bump(m.awayTeam, p).starts++; });
+    (m.goals || []).forEach(g => {
+      const club = g.team === "home" ? m.homeTeam : m.awayTeam;
+      if (g.scorer && !g.og) bump(club, g.scorer).goals++;
+      if (g.assist && !g.og) bump(club, g.assist).assists++;
+    });
+  }
+  return [...map.values()].sort((a, b) =>
+    b.goals - a.goals || b.assists - a.assists || a.player.localeCompare(b.player));
+}
+
+/* ------------------------------ rendering ------------------------------ */
+function renderChips(){
+  const played = DATA.matches.filter(isPlayed);
+  const goals = played.reduce((s, m) => s + (m.homeScore || 0) + (m.awayScore || 0), 0);
+  const top = buildStats(DATA.matches)[0];
+  let html =
+    `<span class="chip tnum">${played.length} played &middot; ${DATA.matches.length - played.length} upcoming</span>` +
+    `<span class="chip tnum">${goals} goals</span>`;
+  if (top && top.goals > 0)
+    html += `<span class="chip">Top scorer: ${esc(top.player)} (${top.goals})</span>`;
+  document.getElementById("chips").innerHTML = html;
+}
+
+function matchCard(m){
+  const open = state.open.has(m.id);
+  const goals = [...(m.goals || [])].sort((a, b) => (a.minute ?? 999) - (b.minute ?? 999));
+  const side = t => t === "home" ? m.homeTeam : m.awayTeam;
+
+  const scoreHtml = isPlayed(m)
+    ? `<p class="num tnum">${m.homeScore ?? 0}&ndash;${m.awayScore ?? 0}</p><p class="tag">FT</p>`
+    : `<p class="vs">vs</p><p class="tag fix">Fixture</p>`;
+
+  let openHtml = "";
+  if (open){
+    const goalRows = goals.map(g => `
+      <li><span class="min tnum">${g.minute != null ? g.minute + "&prime;" : "&ndash;"}</span>
+        ${dot(side(g.team), true)}
+        <span><strong>${esc(g.scorer || "Unknown")}</strong>${g.og ? ' <span style="color:var(--muted)">(og)</span>' : ""}${g.assist ? ` <span style="color:var(--muted)">&middot; assist ${esc(g.assist)}</span>` : ""}</span></li>`).join("");
+    const xiCol = (club, xi) => `
+      <div><p class="sec">${dot(club, true)} ${esc(club)} XI</p>
+      ${xi && xi.length
+        ? `<ol>${xi.map((p, i) => `<li><span class="n tnum">${i + 1}</span><span>${esc(p)}</span></li>`).join("")}</ol>`
+        : `<p class="quiet">Not published</p>`}</div>`;
+    const hasAny = goals.length || (m.homeLineup || []).length || (m.awayLineup || []).length;
+    openHtml = `<div class="m-open">
+      ${goals.length ? `<p class="sec">Goals</p><ul class="goals-list">${goalRows}</ul>` : ""}
+      ${(m.homeLineup || []).length || (m.awayLineup || []).length
+        ? `<div class="xi-grid">${xiCol(m.homeTeam, m.homeLineup)}${xiCol(m.awayTeam, m.awayLineup)}</div>` : ""}
+      ${hasAny ? "" : `<p class="quiet">${isPlayed(m) ? "Details not published for this one yet - the next refresh may pick them up." : "Lineups and scorers appear automatically after full time."}</p>`}
+    </div>`;
+  }
+
+  return `<div class="card">
+    <div class="m-row">
+      <div class="spine" aria-hidden="true">
+        <i style="background:${clubColor(m.homeTeam)}"></i>
+        <i style="background:${clubColor(m.awayTeam)}"></i>
+      </div>
+      <button class="m-btn" data-open="${esc(m.id)}" aria-expanded="${open}">
+        <span style="min-width:0">
+          <span class="m-date">${fmtDate(m.date)}${m.note ? " &middot; " + esc(m.note) : ""}</span>
+          <span class="m-team">${dot(m.homeTeam)} ${esc(m.homeTeam)}</span>
+          <span class="m-team">${dot(m.awayTeam)} ${esc(m.awayTeam)}</span>
+        </span>
+        <span class="m-score">${scoreHtml}</span>
+      </button>
+    </div>${openHtml}
+  </div>`;
+}
+
+function statTable(rows, showClub){
+  const head = `<tr><th>Player</th>${showClub ? "<th>Club</th>" : ""}<th title="Starts">St</th><th title="Goals">G</th><th title="Assists">A</th><th>G+A</th></tr>`;
+  const body = rows.map(r => `<tr>
+    <td class="pl">${esc(r.player)}</td>
+    ${showClub ? `<td><span class="club-cell">${dot(r.club, true)} ${esc(r.club)}</span></td>` : ""}
+    <td class="tnum" style="color:var(--muted)">${r.starts}</td>
+    <td class="tnum g">${r.goals}</td>
+    <td class="tnum">${r.assists}</td>
+    <td class="tnum" style="color:var(--muted)">${r.goals + r.assists}</td></tr>`).join("");
+  return `<table>${head}${body}</table>`;
+}
+
+function render(){
+  renderChips();
+  const content = document.getElementById("content");
+  document.getElementById("players-mode").hidden = state.tab !== "players";
+  document.querySelectorAll("[data-tab]").forEach(b => {
+    const on = b.dataset.tab === state.tab;
+    b.classList.toggle("on", on);
+    b.setAttribute("aria-selected", on);
+  });
+  document.querySelectorAll("[data-pmode]").forEach(b =>
+    b.classList.toggle("on", b.dataset.pmode === state.pmode));
+
+  const filtered = state.club
+    ? DATA.matches.filter(m =>
+        normClub(m.homeTeam) === state.club || normClub(m.awayTeam) === state.club)
+    : DATA.matches;
+
+  if (!DATA.matches.length){
+    content.innerHTML = `<div class="empty">
+      <p class="display">No data yet</p>
+      <p>Run the <strong>Update pre-season data</strong> workflow once from your repo's
+      Actions tab (or <code>python pipeline/update.py --backfill</code> locally) and
+      this page fills itself in.</p></div>`;
+    return;
+  }
+
+  if (state.tab === "matches"){
+    const sorted = [...filtered].sort((a, b) =>
+      (a.date || "9999").localeCompare(b.date || "9999") || a.id.localeCompare(b.id));
+    content.innerHTML = sorted.length
+      ? `<div class="stack">${sorted.map(matchCard).join("")}</div>`
+      : `<div class="empty"><p class="display">No matches</p><p>Nothing on file for that club yet.</p></div>`;
+    return;
+  }
+
+  const rows = buildStats(filtered).filter(r => r.starts || r.goals || r.assists);
+  if (!rows.length){
+    content.innerHTML = `<div class="empty"><p class="display">No player stats yet</p>
+      <p>Totals build automatically from lineups and goals as results come in.</p></div>`;
+    return;
+  }
+  if (state.pmode === "leaderboard"){
+    content.innerHTML = `<div class="card" style="margin-top:16px"><div class="pad" style="overflow-x:auto">${statTable(rows, true)}</div></div>`;
+    return;
+  }
+  const clubs = [...new Set(rows.map(r => r.club))].sort((a, b) => {
+    const g = c => rows.filter(r => r.club === c).reduce((s, r) => s + r.goals, 0);
+    return g(b) - g(a) || a.localeCompare(b);
+  });
+  content.innerHTML = `<div class="stack">${clubs.map(club => `
+    <div class="card">
+      <div class="club-head">${dot(club)}<span class="name">${esc(club)}</span>
+        <span class="tot tnum">${rows.filter(r => r.club === club).reduce((s, r) => s + r.goals, 0)} goals</span></div>
+      <div class="pad" style="overflow-x:auto">${statTable(rows.filter(r => r.club === club), false)}</div>
+    </div>`).join("")}</div>`;
+}
+
+/* ------------------------------ events --------------------------------- */
+document.addEventListener("click", e => {
+  const tab = e.target.closest("[data-tab]");
+  if (tab){ state.tab = tab.dataset.tab; render(); return; }
+  const pmode = e.target.closest("[data-pmode]");
+  if (pmode){ state.pmode = pmode.dataset.pmode; render(); return; }
+  const card = e.target.closest("[data-open]");
+  if (card){
+    const id = card.dataset.open;
+    state.open.has(id) ? state.open.delete(id) : state.open.add(id);
+    render();
+  }
+});
+document.getElementById("club-filter").addEventListener("change", e => {
+  state.club = e.target.value;
+  render();
+});
+
+/* ------------------------------ boot ----------------------------------- */
+(async () => {
+  try {
+    const res = await fetch("data/matches.json", { cache: "no-store" });
+    if (!res.ok) throw new Error(res.status);
+    DATA = await res.json();
+    if (!Array.isArray(DATA.matches)) DATA.matches = [];
+  } catch (err) {
+    DATA = { meta:{}, matches:[] };
+  }
+
+  const filter = document.getElementById("club-filter");
+  const clubs = [...new Set(DATA.matches.flatMap(m => [m.homeTeam, m.awayTeam]))]
+    .filter(Boolean).sort();
+  filter.innerHTML = `<option value="">All clubs</option>` +
+    clubs.map(c => `<option value="${esc(normClub(c))}">${esc(c)}</option>`).join("");
+
+  const stamp = document.getElementById("updated");
+  if (DATA.meta && DATA.meta.lastUpdated){
+    const dt = new Date(DATA.meta.lastUpdated);
+    stamp.textContent = "Updated " + dt.toLocaleString("en-GB",
+      { weekday:"short", day:"numeric", month:"short", hour:"2-digit",
+        minute:"2-digit", timeZone:"Europe/London" });
+  } else {
+    stamp.textContent = "Awaiting first data refresh";
+  }
+  render();
+})();
+</script>
+</body>
+</html>
