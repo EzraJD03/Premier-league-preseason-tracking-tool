@@ -1,7 +1,210 @@
 {
   "meta": {
-    "lastUpdated": null,
+    "lastUpdated": "2026-07-20T08:34:01+00:00",
     "source": "ESPN club friendlies feed"
   },
-  "matches": []
+  "matches": [
+    {
+      "id": "espn-401863531",
+      "date": "2026-07-18",
+      "note": "Helsinki",
+      "homeTeam": "Man Utd",
+      "awayTeam": "Wrexham",
+      "homeScore": 0,
+      "awayScore": 1,
+      "homeLineup": [
+        "Tom Heaton",
+        "Leny Yoro",
+        "Luke Shaw",
+        "Andrey Santos",
+        "Harry Maguire",
+        "Ayden Heaven",
+        "Bryan Mbeumo",
+        "Mason Mount",
+        "Joshua Zirkzee",
+        "Jack Fletcher",
+        "Patrick Dorgu"
+      ],
+      "awayLineup": [
+        "Arthur Okonkwo",
+        "Aaron James",
+        "George Thomason",
+        "Callum Doyle",
+        "Dan Scarr",
+        "Zak Vyner",
+        "Matty James",
+        "Lewis O'Brien",
+        "Bailey Cadamarteri",
+        "Sam Smith",
+        "Nathan Broadhead"
+      ],
+      "goals": [
+        {
+          "id": "401863531-g1",
+          "team": "away",
+          "scorer": "Sam Smith",
+          "assist": "Lewis O'Brien",
+          "minute": 39,
+          "og": false
+        }
+      ]
+    },
+    {
+      "id": "espn-401891721",
+      "date": "2026-07-18",
+      "note": "",
+      "homeTeam": "Crystal Palace",
+      "awayTeam": "Swindon Town",
+      "homeScore": 5,
+      "awayScore": 1,
+      "homeLineup": [],
+      "awayLineup": [],
+      "goals": [
+        {
+          "id": "401891721-g5",
+          "team": "home",
+          "scorer": "Eddie Nketiah",
+          "assist": "",
+          "minute": 9,
+          "og": false
+        },
+        {
+          "id": "401891721-g6",
+          "team": "home",
+          "scorer": "Eddie Nketiah",
+          "assist": "Romain Esse",
+          "minute": 21,
+          "og": false
+        },
+        {
+          "id": "401891721-g12",
+          "team": "away",
+          "scorer": "Fletcher Holman",
+          "assist": "Matthew Virtue-Thick",
+          "minute": 33,
+          "og": false
+        },
+        {
+          "id": "401891721-g26",
+          "team": "home",
+          "scorer": "Matheus França",
+          "assist": "",
+          "minute": 56,
+          "og": false
+        },
+        {
+          "id": "401891721-g35",
+          "team": "home",
+          "scorer": "Matheus França",
+          "assist": "",
+          "minute": 59,
+          "og": false
+        },
+        {
+          "id": "401891721-g42",
+          "team": "home",
+          "scorer": "Matheus França",
+          "assist": "",
+          "minute": 82,
+          "og": false
+        }
+      ]
+    },
+    {
+      "id": "espn-401886545",
+      "date": "2026-07-22",
+      "note": "",
+      "homeTeam": "Tottenham",
+      "awayTeam": "Milton Keynes Dons",
+      "homeScore": null,
+      "awayScore": null,
+      "homeLineup": [],
+      "awayLineup": [],
+      "goals": []
+    },
+    {
+      "id": "espn-401869196",
+      "date": "2026-07-24",
+      "note": "Trondheim",
+      "homeTeam": "Rosenborg",
+      "awayTeam": "Man Utd",
+      "homeScore": null,
+      "awayScore": null,
+      "homeLineup": [],
+      "awayLineup": [],
+      "goals": []
+    },
+    {
+      "id": "espn-401869427",
+      "date": "2026-07-25",
+      "note": "Nashville, Tennessee",
+      "homeTeam": "Liverpool",
+      "awayTeam": "Sunderland",
+      "homeScore": null,
+      "awayScore": null,
+      "homeLineup": [],
+      "awayLineup": [],
+      "goals": []
+    },
+    {
+      "id": "espn-401891770",
+      "date": "2026-07-25",
+      "note": "Bromley",
+      "homeTeam": "Bromley",
+      "awayTeam": "Crystal Palace",
+      "homeScore": null,
+      "awayScore": null,
+      "homeLineup": [],
+      "awayLineup": [],
+      "goals": []
+    },
+    {
+      "id": "espn-401867393",
+      "date": "2026-07-26",
+      "note": "Auckland",
+      "homeTeam": "Auckland FC",
+      "awayTeam": "Tottenham",
+      "homeScore": null,
+      "awayScore": null,
+      "homeLineup": [],
+      "awayLineup": [],
+      "goals": []
+    },
+    {
+      "id": "espn-401897749",
+      "date": "2026-07-26",
+      "note": "Tampa, Florida",
+      "homeTeam": "Wrexham",
+      "awayTeam": "Leeds United",
+      "homeScore": null,
+      "awayScore": null,
+      "homeLineup": [],
+      "awayLineup": [],
+      "goals": []
+    },
+    {
+      "id": "espn-401863532",
+      "date": "2026-07-30",
+      "note": "New York City",
+      "homeTeam": "Liverpool",
+      "awayTeam": "Wrexham",
+      "homeScore": null,
+      "awayScore": null,
+      "homeLineup": [],
+      "awayLineup": [],
+      "goals": []
+    },
+    {
+      "id": "espn-401897750",
+      "date": "2026-07-31",
+      "note": "Harrison, New Jersey",
+      "homeTeam": "Sunderland",
+      "awayTeam": "Leeds United",
+      "homeScore": null,
+      "awayScore": null,
+      "homeLineup": [],
+      "awayLineup": [],
+      "goals": []
+    }
+  ]
 }
