@@ -1,7 +1,7 @@
 {
   "meta": {
-    "lastUpdated": "2026-07-21T08:15:26+00:00",
-    "source": "ESPN club friendlies feed"
+    "lastUpdated": "2026-07-21T12:23:43+00:00",
+    "source": "ESPN club friendlies + club schedules"
   },
   "matches": [
     {
@@ -47,7 +47,8 @@
           "minute": 39,
           "og": false
         }
-      ]
+      ],
+      "league": "club.friendly"
     },
     {
       "id": "espn-401891721",
@@ -108,7 +109,8 @@
           "minute": 82,
           "og": false
         }
-      ]
+      ],
+      "league": "club.friendly"
     },
     {
       "id": "espn-401886545",
@@ -120,7 +122,8 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
     },
     {
       "id": "espn-401869196",
@@ -132,7 +135,8 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
     },
     {
       "id": "espn-401869427",
@@ -144,7 +148,8 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
     },
     {
       "id": "espn-401891770",
@@ -156,7 +161,8 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
     },
     {
       "id": "espn-401867393",
@@ -168,7 +174,8 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
     },
     {
       "id": "espn-401897749",
@@ -180,7 +187,8 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
     },
     {
       "id": "espn-401863532",
@@ -192,7 +200,8 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
     },
     {
       "id": "espn-401897750",
@@ -204,7 +213,8 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
     },
     {
       "id": "espn-401869198",
@@ -216,7 +226,8 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
     },
     {
       "id": "espn-401871493",
@@ -228,7 +239,8 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
     },
     {
       "id": "espn-401886553",
@@ -240,7 +252,8 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
     },
     {
       "id": "espn-401863533",
@@ -252,7 +265,8 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
     },
     {
       "id": "espn-401897751",
@@ -264,7 +278,8 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
     },
     {
       "id": "espn-401867142",
@@ -276,7 +291,8 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
     },
     {
       "id": "espn-401871494",
@@ -288,7 +304,8 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
     },
     {
       "id": "espn-401867952",
@@ -300,7 +317,8 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
     },
     {
       "id": "espn-401868048",
@@ -312,7 +330,8 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
     },
     {
       "id": "espn-401871495",
@@ -324,7 +343,8 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
     },
     {
       "id": "espn-401886556",
@@ -336,7 +356,8 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
     },
     {
       "id": "espn-401886557",
@@ -348,7 +369,21 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
+    },
+    {
+      "id": "espn-401881706",
+      "date": "2026-08-09",
+      "note": "London",
+      "homeTeam": "Arsenal",
+      "awayTeam": "Borussia Dortmund",
+      "homeScore": null,
+      "awayScore": null,
+      "homeLineup": [],
+      "awayLineup": [],
+      "goals": [],
+      "league": "friendly.emirates_cup"
     },
     {
       "id": "espn-401886533",
@@ -360,7 +395,8 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
     },
     {
       "id": "espn-401886559",
@@ -372,7 +408,8 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
     },
     {
       "id": "espn-401886560",
@@ -384,7 +421,8 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
     },
     {
       "id": "espn-401867394",
@@ -396,7 +434,21 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
+    },
+    {
+      "id": "espn-401873624",
+      "date": "2026-08-12",
+      "note": "Salzburg",
+      "homeTeam": "Paris Saint-Germain",
+      "awayTeam": "Aston Villa",
+      "homeScore": null,
+      "awayScore": null,
+      "homeLineup": [],
+      "awayLineup": [],
+      "goals": [],
+      "league": "uefa.super_cup"
     },
     {
       "id": "espn-401886555",
@@ -408,7 +460,8 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
     },
     {
       "id": "espn-401886534",
@@ -420,7 +473,8 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
     },
     {
       "id": "espn-401886562",
@@ -432,7 +486,21 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
+    },
+    {
+      "id": "espn-401875219",
+      "date": "2026-08-16",
+      "note": "",
+      "homeTeam": "Arsenal",
+      "awayTeam": "Man City",
+      "homeScore": null,
+      "awayScore": null,
+      "homeLineup": [],
+      "awayLineup": [],
+      "goals": [],
+      "league": "eng.charity"
     },
     {
       "id": "espn-401886535",
@@ -444,7 +512,8 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
     },
     {
       "id": "espn-401886558",
@@ -456,7 +525,8 @@
       "awayScore": null,
       "homeLineup": [],
       "awayLineup": [],
-      "goals": []
+      "goals": [],
+      "league": "club.friendly"
     }
   ]
 }
