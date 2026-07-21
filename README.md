@@ -43,9 +43,25 @@ ESPN feed ──▶ pipeline/update.py ──▶ data/matches.json ──▶ ind
 - Runs at **06:00 and 14:00 UTC** (07:00 / 15:00 UK in summer). The morning
   run catches overnight results from the US tours; the afternoon run catches
   Asia-tour games and newly announced fixtures.
-- Each run re-scans the **last 3 days** (lineups and corrections often land
-  late) plus the **next 10 days** for new fixtures. Everything already on
-  file outside that window is left untouched.
+- Discovery is driven by **each Premier League club's own ESPN schedule**
+  (team ids resolved at runtime from the PL roster), queried across all
+  competitions and both played and upcoming games. Because every match that
+  matters has a PL club on one side, this finds them all - including away
+  games at lower-league hosts (e.g. Wimbledon v Coventry) and games filed
+  under any competition slug, not just `club.friendly`. The friendly
+  scoreboard is scanned too as a supplement. The only filters applied are
+  "a PL club is involved" and "the date is before the 21 August opener".
+- Any overdue fixture the scoreboard never flips to full time gets checked
+  **directly against its match summary**, so schedule-only discoveries and
+  stale scoreboard caches still finalise with scores, XIs and goals.
+- Per-match detail fetches (lineups, scorers) only happen where needed: a
+  match is newly finished, its score changed upstream, it finished within
+  the last 3 days (lineups often land late), or details are still missing
+  (retried for up to 14 days). Everything else is carried forward
+  untouched, so runs stay quick and light on the feed.
+- Fixtures that disappear from the feed (cancellations, duplicates) are
+  removed only after a fully clean scan; played matches are never deleted,
+  and any missed runs self-heal on the next scan.
 - In-progress matches stay listed as fixtures until full time; the next run
   finalises them.
 - The window automatically closes at the league opener (21 August), after
@@ -61,8 +77,8 @@ No GitHub needed if you'd rather keep it on your own machine:
 
 ```bash
 pip install -r pipeline/requirements.txt
-python pipeline/update.py --backfill      # first run
-python pipeline/update.py                 # subsequent runs (add to cron)
+python pipeline/update.py                 # every run scans the full summer
+python pipeline/update.py --backfill      # optional: re-fetch all details
 python -m http.server 8000                # then open http://localhost:8000
 ```
 
@@ -71,16 +87,22 @@ over HTTP rather than opened as a bare file.)
 
 ## Data notes & honest limitations
 
-- **Source**: ESPN's public, key-free JSON feed (`site.api.espn.com`,
-  league `club.friendly`). It's unofficial, so ESPN could change it without
-  notice — the script fails soft and logs rather than crashing, and the
-  Actions log will make any breakage obvious.
+- **Sources**: ESPN's public, key-free JSON feeds (the `club.friendly`
+  scoreboard plus per-club schedule and match-summary endpoints). They're
+  unofficial, so ESPN could change them without notice — the script fails
+  soft and logs rather than crashing, and the Actions log will make any
+  breakage obvious.
+- Friendlies ESPN doesn't carry **anywhere** (typically behind-closed-doors
+  training-ground games) can't be discovered from any endpoint. You can add
+  those by hand to `data/matches.json` using an `id` that doesn't start
+  with `espn-` — the pipeline will preserve them and never prune them.
 - **Coverage** of the big pre-season games (tours, Summer Series, televised
   friendlies) is strong; small behind-closed-doors friendlies sometimes
   aren't listed anywhere, including here.
 - **Lineups** appear when ESPN publishes them — usually around kick-off.
-  A match can therefore show a result before its XIs; the 3-day re-scan
-  picks them up.
+  A match can therefore show a result before its XIs; the pipeline keeps
+  retrying recent matches, and anything still missing details for up to
+  two weeks.
 - **Own goals** are recorded against the side they counted for and excluded
   from the scorer's personal tally. The script cross-checks goal events
   against the final score and logs any mismatch it can't resolve.
