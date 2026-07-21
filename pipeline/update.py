@@ -34,7 +34,9 @@ from zoneinfo import ZoneInfo
 
 import requests
 
-BASE = "https://site.api.espn.com/apis/site/v2/sports/soccer/club.friendly"
+SITE = "https://site.api.espn.com/apis/site/v2/sports/soccer"
+WEB = "https://site.web.api.espn.com/apis/site/v2/sports/soccer"
+BASE = f"{SITE}/club.friendly"
 LONDON = ZoneInfo("Europe/London")
 
 PRESEASON_START = date(2026, 7, 1)
@@ -136,6 +138,16 @@ def parse_minute(display: str | None, clock_value=None):
     return None
 
 
+def coerce_score(value):
+    """Scores arrive as "2", 2, or {"value": 2.0, "displayValue": "2"}."""
+    if isinstance(value, dict):
+        value = value.get("displayValue", value.get("value"))
+    try:
+        return int(float(value))
+    except (TypeError, ValueError):
+        return None
+
+
 def daterange(start: date, end: date):
     d = start
     while d <= end:
@@ -166,14 +178,10 @@ def build_skeleton(event: dict) -> dict | None:
 
     status = ((comp.get("status") or {}).get("type")) or {}
     finished = status.get("state") == "post" or status.get("completed") is True
+    league = ((event.get("league") or {}).get("slug")) or "club.friendly"
 
     def score(side):
-        if not finished:
-            return None
-        try:
-            return int(side.get("score"))
-        except (TypeError, ValueError):
-            return None
+        return coerce_score(side.get("score")) if finished else None
 
     venue = comp.get("venue") or {}
     note = ((venue.get("address") or {}).get("city") or venue.get("fullName") or "").strip()
@@ -189,6 +197,7 @@ def build_skeleton(event: dict) -> dict | None:
         "homeLineup": [],
         "awayLineup": [],
         "goals": [],
+        "league": league,
         "_espn": {
             "eventId": str(event["id"]),
             "homeId": str((home.get("team") or {}).get("id", "")),
@@ -310,7 +319,8 @@ def reconcile_goal_sides(goals: list, home_score, away_score) -> list:
 def enrich(match: dict) -> None:
     """For a finished match, pull the summary for lineups and goal details."""
     meta = match["_espn"]
-    summary = get_json(f"{BASE}/summary", params={"event": meta["eventId"]})
+    league = match.get("league") or "club.friendly"
+    summary = get_json(f"{SITE}/{league}/summary", params={"event": meta["eventId"]})
     if summary:
         home_xi, away_xi = extract_lineups(summary, meta["homeId"], meta["awayId"])
         match["homeLineup"], match["awayLineup"] = home_xi, away_xi
@@ -341,7 +351,7 @@ def enrich(match: dict) -> None:
 # --------------------------------------------------------------------------
 
 def collect(window_start: date, window_end: date) -> tuple[list, int]:
-    """Scan the scoreboard day by day; return (matches, failed_day_count)."""
+    """Discovery A: scan the friendly scoreboard day by day."""
     matches, failed = [], 0
     for day in daterange(window_start, window_end):
         data = get_json(f"{BASE}/scoreboard", params={"dates": day.strftime("%Y%m%d")})
@@ -353,6 +363,45 @@ def collect(window_start: date, window_end: date) -> tuple[list, int]:
             if skeleton:
                 matches.append(skeleton)
         time.sleep(0.25)  # be polite
+    return matches, failed
+
+
+def resolve_team_ids() -> dict:
+    """Map tracker club names -> ESPN team ids via the Premier League roster."""
+    data = get_json(f"{SITE}/eng.1/teams")
+    ids: dict[str, str] = {}
+    try:
+        for entry in data["sports"][0]["leagues"][0]["teams"]:
+            team = entry.get("team") or {}
+            if is_pl(team.get("displayName")):
+                ids[canonical(team["displayName"])] = str(team["id"])
+    except (KeyError, IndexError, TypeError):
+        pass
+    for club in sorted(set(PL_CLUBS.values())):
+        if club not in ids:
+            print(f"  ! could not resolve an ESPN id for {club}", file=sys.stderr)
+    return ids
+
+
+def collect_from_schedules(team_ids: dict, window_start: date,
+                           window_end: date) -> tuple[list, int]:
+    """Discovery B: each club's own upcoming-fixtures list. Catches friendlies
+    the day-by-day scoreboard never indexes, plus games filed under other
+    competitions (each event carries its own league slug)."""
+    matches, failed = [], 0
+    lo, hi = window_start.isoformat(), window_end.isoformat()
+    for club in sorted(team_ids):
+        data = get_json(
+            f"{WEB}/all/teams/{team_ids[club]}/schedule", params={"fixture": "true"}
+        )
+        if data is None:
+            failed += 1
+            continue
+        for event in data.get("events") or []:
+            skeleton = build_skeleton(event)
+            if skeleton and lo <= skeleton["date"] <= hi:
+                matches.append(skeleton)
+        time.sleep(0.25)
     return matches, failed
 
 
@@ -377,6 +426,36 @@ def needs_details(skel: dict, stored: dict | None, today: date,
     expected = (skel["homeScore"] or 0) + (skel["awayScore"] or 0)
     missing_goals = expected > 0 and len(stored.get("goals") or []) < expected
     return (missing_xi or missing_goals) and age <= STRAGGLER_DAYS
+
+
+def finalize_from_summary(match: dict) -> bool:
+    """For a stored fixture whose date has passed but which the (sometimes
+    stale or incomplete) scoreboard never marked finished: ask the match
+    summary directly and, if it's full time, take everything from there."""
+    league = match.get("league") or "club.friendly"
+    event_id = match["id"][len("espn-"):]
+    summary = get_json(f"{SITE}/{league}/summary", params={"event": event_id})
+    if not summary:
+        return False
+    try:
+        comp = (summary.get("header") or {}).get("competitions", [{}])[0]
+        state = (((comp.get("status") or {}).get("type")) or {}).get("state")
+        if state != "post":
+            return False
+        competitors = comp.get("competitors") or []
+        home = next(c for c in competitors if c.get("homeAway") == "home")
+        away = next(c for c in competitors if c.get("homeAway") == "away")
+    except (StopIteration, IndexError, AttributeError):
+        return False
+    home_id = str(home.get("id") or (home.get("team") or {}).get("id", ""))
+    away_id = str(away.get("id") or (away.get("team") or {}).get("id", ""))
+    match["homeScore"] = coerce_score(home.get("score"))
+    match["awayScore"] = coerce_score(away.get("score"))
+    xi = extract_lineups(summary, home_id, away_id)
+    match["homeLineup"], match["awayLineup"] = xi
+    goals = extract_goals(summary.get("keyEvents"), home_id, away_id, event_id)
+    match["goals"] = reconcile_goal_sides(goals, match["homeScore"], match["awayScore"])
+    return True
 
 
 def run(args) -> int:
@@ -404,12 +483,20 @@ def run(args) -> int:
         print("All scoreboard requests failed - is the feed down?", file=sys.stderr)
         return 1
 
-    # the same event can surface twice around midnight buckets; keep the latest
-    scanned = list({m["id"]: m for m in scanned}.values())
+    team_ids = resolve_team_ids()
+    from_schedules, sched_failed = collect_from_schedules(
+        team_ids, max(today, window_start), window_end
+    )
 
-    seen_ids, new, updated, fetched, carried, with_xi = set(), 0, 0, 0, 0, 0
+    # de-duplicate across sources; the scoreboard copy wins when both have it
+    scanned = list({m["id"]: m for m in from_schedules + scanned}.values())
+
+    seen_ids, finished_ids = set(), set()
+    new = updated = fetched = carried = with_xi = 0
     for match in scanned:
         seen_ids.add(match["id"])
+        if match["_espn"]["finished"]:
+            finished_ids.add(match["id"])
         stored = by_id.get(match["id"])
 
         # never let a feed glitch downgrade a stored result back to a fixture
@@ -442,10 +529,32 @@ def run(args) -> int:
             updated += 1
         by_id[match["id"]] = match
 
-    # prune fixtures that vanished from the feed - only after a fully clean
-    # scan, only unplayed matches, and never hand-added (non-ESPN) records
+    # overdue fixtures the scoreboard never flipped to full time: ask the
+    # match summary directly (also finalizes schedule-only discoveries)
+    finalized = 0
+    for mid, match in list(by_id.items()):
+        if not mid.startswith("espn-") or mid in finished_ids:
+            continue
+        if match.get("homeScore") is not None or match.get("awayScore") is not None:
+            continue
+        try:
+            age = (today - date.fromisoformat(match.get("date") or "")).days
+        except ValueError:
+            continue
+        if 0 < age <= STRAGGLER_DAYS:
+            if finalize_from_summary(match):
+                finalized += 1
+            time.sleep(0.35)
+
+    # prune fixtures that vanished from every source - only after a fully
+    # clean run, only unplayed matches, never hand-added (non-ESPN) records
     pruned = 0
-    if days_failed == 0:
+    prune_safe = (
+        days_failed == 0
+        and sched_failed == 0
+        and len(team_ids) == len(set(PL_CLUBS.values()))
+    )
+    if prune_safe:
         for mid in list(by_id):
             m = by_id[mid]
             if not mid.startswith("espn-") or mid in seen_ids:
@@ -465,7 +574,7 @@ def run(args) -> int:
     payload = {
         "meta": {
             "lastUpdated": datetime.now(tz=ZoneInfo("UTC")).isoformat(timespec="seconds"),
-            "source": "ESPN club friendlies feed",
+            "source": "ESPN club friendlies + club schedules",
         },
         "matches": merged,
     }
@@ -473,11 +582,14 @@ def run(args) -> int:
     out.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n")
 
     print(
-        f"Done: {len(scanned)} PL matches in feed ({new} new, {updated} updated, "
-        f"{fetched} detail fetches, {carried} carried forward, {with_xi} with both XIs)"
+        f"Done: {len(scanned)} PL matches in feed "
+        f"({len(from_schedules)} via club schedules; {new} new, {updated} updated, "
+        f"{fetched} detail fetches, {carried} carried forward, "
+        f"{finalized} finalized from summaries, {with_xi} with both XIs)"
         + (f", {pruned} vanished fixture(s) removed" if pruned else "")
         + f", {len(merged)} total on file."
-        + (f" {days_failed} day(s) failed to fetch." if days_failed else "")
+        + (f" {days_failed} scoreboard day(s) failed." if days_failed else "")
+        + (f" {sched_failed} schedule fetch(es) failed." if sched_failed else "")
     )
     return 0
 
