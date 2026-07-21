@@ -351,7 +351,9 @@ def enrich(match: dict) -> None:
 # --------------------------------------------------------------------------
 
 def collect(window_start: date, window_end: date) -> tuple[list, int]:
-    """Discovery A: scan the friendly scoreboard day by day."""
+    """Supplementary: scan the friendly scoreboard day by day. Catches games
+    where BOTH sides are non-PL... which never applies here, but also picks up
+    neutral-site events indexed by date before they appear on club schedules."""
     matches, failed = [], 0
     for day in daterange(window_start, window_end):
         data = get_json(f"{BASE}/scoreboard", params={"dates": day.strftime("%Y%m%d")})
@@ -383,21 +385,49 @@ def resolve_team_ids() -> dict:
     return ids
 
 
+# ESPN season type for pre-season club friendlies (see event.seasonType.type
+# in the schedule feed). Passed explicitly so a club's schedule returns its
+# summer games rather than defaulting to the league season.
+FRIENDLY_SEASONTYPE = 13818
+
+
+def _schedule_events(team_id: str) -> list | None:
+    """Every summer event for one club, across ALL competitions and both
+    played and upcoming. Tries the friendly-season schedule first, then falls
+    back to the default schedule, merging whatever each returns."""
+    seen, events, any_ok = set(), [], False
+    for params in (
+        {"seasontype": FRIENDLY_SEASONTYPE},  # 2026 Club Friendly season
+        {"fixture": "true"},                  # upcoming, default season
+        {},                                   # default season, played + upcoming
+    ):
+        data = get_json(f"{WEB}/all/teams/{team_id}/schedule", params=params)
+        if data is None:
+            continue
+        any_ok = True
+        for event in data.get("events") or []:
+            eid = str(event.get("id"))
+            if eid and eid not in seen:
+                seen.add(eid)
+                events.append(event)
+    return events if any_ok else None
+
+
 def collect_from_schedules(team_ids: dict, window_start: date,
                            window_end: date) -> tuple[list, int]:
-    """Discovery B: each club's own upcoming-fixtures list. Catches friendlies
-    the day-by-day scoreboard never indexes, plus games filed under other
-    competitions (each event carries its own league slug)."""
+    """Primary discovery: each PL club's OWN schedule. Because every match we
+    care about has a PL club on one side, this finds them all - including away
+    games at lower-league hosts (Wimbledon v Coventry) and games under any
+    competition slug. No league filtering: the only tests are 'a PL club is
+    involved' (guaranteed here) and 'date within the pre-season window'."""
     matches, failed = [], 0
     lo, hi = window_start.isoformat(), window_end.isoformat()
     for club in sorted(team_ids):
-        data = get_json(
-            f"{WEB}/all/teams/{team_ids[club]}/schedule", params={"fixture": "true"}
-        )
-        if data is None:
+        events = _schedule_events(team_ids[club])
+        if events is None:
             failed += 1
             continue
-        for event in data.get("events") or []:
+        for event in events:
             skeleton = build_skeleton(event)
             if skeleton and lo <= skeleton["date"] <= hi:
                 matches.append(skeleton)
@@ -485,7 +515,7 @@ def run(args) -> int:
 
     team_ids = resolve_team_ids()
     from_schedules, sched_failed = collect_from_schedules(
-        team_ids, max(today, window_start), window_end
+        team_ids, window_start, window_end
     )
 
     # de-duplicate across sources; the scoreboard copy wins when both have it
