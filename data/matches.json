@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-07-22T15:28:24+00:00",
+    "lastUpdated": "2026-07-23T08:20:22+00:00",
     "source": "ESPN club friendlies + club schedules"
   },
   "matches": [
@@ -118,11 +118,44 @@
       "note": "",
       "homeTeam": "Tottenham",
       "awayTeam": "Milton Keynes Dons",
-      "homeScore": null,
-      "awayScore": null,
-      "homeLineup": [],
-      "awayLineup": [],
-      "goals": [],
+      "homeScore": 1,
+      "awayScore": 0,
+      "homeLineup": [
+        "Antonín Kinsky",
+        "Archie Gray",
+        "Rio Kyerematen",
+        "Sandro Tonali",
+        "Kota Takai",
+        "Ben Davies",
+        "Manor Solomon",
+        "Mateus Fernandes",
+        "Dominic Solanke",
+        "Conor Gallagher",
+        "Mathys Tel"
+      ],
+      "awayLineup": [
+        "Craig MacGillivray",
+        "Gethin Jones",
+        "Cohen Bramall",
+        "Charlie Waller",
+        "Charlie Goode",
+        "Jack Sanders",
+        "Daniel Crowley",
+        "Daniel Barlaser",
+        "Callum Paterson",
+        "Ryan Wintle",
+        "Rushian Hepburn-Murphy"
+      ],
+      "goals": [
+        {
+          "id": "401886545-g1",
+          "team": "home",
+          "scorer": "Mateus Fernandes",
+          "assist": "",
+          "minute": 3,
+          "og": false
+        }
+      ],
       "league": "club.friendly"
     },
     {
