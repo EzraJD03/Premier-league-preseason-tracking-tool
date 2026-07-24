@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-07-23T15:51:18+00:00",
+    "lastUpdated": "2026-07-24T08:15:09+00:00",
     "source": "ESPN club friendlies + club schedules"
   },
   "matches": [
@@ -515,6 +515,19 @@
       "note": "Wroclaw",
       "homeTeam": "AC Milan",
       "awayTeam": "Man Utd",
+      "homeScore": null,
+      "awayScore": null,
+      "homeLineup": [],
+      "awayLineup": [],
+      "goals": [],
+      "league": "club.friendly"
+    },
+    {
+      "id": "espn-401899728",
+      "date": "2026-08-15",
+      "note": "Brentford",
+      "homeTeam": "Brentford",
+      "awayTeam": "Eintracht Frankfurt",
       "homeScore": null,
       "awayScore": null,
       "homeLineup": [],
