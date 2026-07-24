@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-07-24T08:15:09+00:00",
+    "lastUpdated": "2026-07-24T15:22:40+00:00",
     "source": "ESPN club friendlies + club schedules"
   },
   "matches": [
@@ -528,6 +528,19 @@
       "note": "Brentford",
       "homeTeam": "Brentford",
       "awayTeam": "Eintracht Frankfurt",
+      "homeScore": null,
+      "awayScore": null,
+      "homeLineup": [],
+      "awayLineup": [],
+      "goals": [],
+      "league": "club.friendly"
+    },
+    {
+      "id": "espn-401900324",
+      "date": "2026-08-15",
+      "note": "London",
+      "homeTeam": "Chelsea",
+      "awayTeam": "Real Sociedad",
       "homeScore": null,
       "awayScore": null,
       "homeLineup": [],
