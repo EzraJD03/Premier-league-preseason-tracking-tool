@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-07-24T15:22:40+00:00",
+    "lastUpdated": "2026-07-25T07:57:24+00:00",
     "source": "ESPN club friendlies + club schedules"
   },
   "matches": [
@@ -115,7 +115,7 @@
     {
       "id": "espn-401886545",
       "date": "2026-07-22",
-      "note": "",
+      "note": "Enfield",
       "homeTeam": "Tottenham",
       "awayTeam": "Milton Keynes Dons",
       "homeScore": 1,
@@ -164,11 +164,76 @@
       "note": "Trondheim",
       "homeTeam": "Rosenborg",
       "awayTeam": "Man Utd",
-      "homeScore": null,
-      "awayScore": null,
-      "homeLineup": [],
-      "awayLineup": [],
-      "goals": [],
+      "homeScore": 0,
+      "awayScore": 5,
+      "homeLineup": [
+        "Leopold Wahlstedt",
+        "Jonas Mortensen",
+        "Adrian Pereira",
+        "Ole Selnaes",
+        "Hakon Volden",
+        "Tomas Nemcik",
+        "Mads Bomholt",
+        "Iver Fossum",
+        "Amin Chiakha",
+        "Jesper Reitan-Sunde",
+        "Noah Sahsah"
+      ],
+      "awayLineup": [
+        "Radek Vítek",
+        "Leny Yoro",
+        "Luke Shaw",
+        "Andrey Santos",
+        "Harry Maguire",
+        "Ayden Heaven",
+        "Bryan Mbeumo",
+        "Mason Mount",
+        "Joshua Zirkzee",
+        "Shea Lacey",
+        "Patrick Dorgu"
+      ],
+      "goals": [
+        {
+          "id": "401869196-g0",
+          "team": "away",
+          "scorer": "Shea Lacey",
+          "assist": "",
+          "minute": 31,
+          "og": false
+        },
+        {
+          "id": "401869196-g12",
+          "team": "away",
+          "scorer": "Joshua Zirkzee",
+          "assist": "",
+          "minute": 56,
+          "og": false
+        },
+        {
+          "id": "401869196-g23",
+          "team": "away",
+          "scorer": "Jacob Devaney",
+          "assist": "",
+          "minute": 63,
+          "og": false
+        },
+        {
+          "id": "401869196-g24",
+          "team": "away",
+          "scorer": "Harry Amass",
+          "assist": "",
+          "minute": 72,
+          "og": false
+        },
+        {
+          "id": "401869196-g27",
+          "team": "away",
+          "scorer": "Ethan Williams",
+          "assist": "",
+          "minute": 84,
+          "og": false
+        }
+      ],
       "league": "club.friendly"
     },
     {
@@ -305,8 +370,8 @@
       "id": "espn-401897751",
       "date": "2026-08-02",
       "note": "Chester, Pennsylvania",
-      "homeTeam": "Wrexham",
-      "awayTeam": "Sunderland",
+      "homeTeam": "Sunderland",
+      "awayTeam": "Wrexham",
       "homeScore": null,
       "awayScore": null,
       "homeLineup": [],
