@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-07-25T14:57:38+00:00",
+    "lastUpdated": "2026-07-26T08:14:59+00:00",
     "source": "ESPN club friendlies + club schedules"
   },
   "matches": [
@@ -242,11 +242,84 @@
       "note": "Nashville, Tennessee",
       "homeTeam": "Liverpool",
       "awayTeam": "Sunderland",
-      "homeScore": null,
-      "awayScore": null,
-      "homeLineup": [],
-      "awayLineup": [],
-      "goals": [],
+      "homeScore": 4,
+      "awayScore": 2,
+      "homeLineup": [
+        "Giorgi Mamardashvili",
+        "Jeremie Frimpong",
+        "Kostas Tsimikas",
+        "James McConnell",
+        "Joe Gomez",
+        "Talla Ndiaye",
+        "Kieran Morrison",
+        "Curtis Jones",
+        "Will Wright",
+        "Harvey Elliott",
+        "Rio Ngumoha"
+      ],
+      "awayLineup": [
+        "Melker Ellborg",
+        "Nordi Mukiele",
+        "Reinildo Mandava",
+        "Alan Browne",
+        "Danny Ballard",
+        "Luke O'Nien",
+        "Trai Hume",
+        "Enzo Le Fée",
+        "Wilson Isidor",
+        "Chris Rigg",
+        "Romaine Mundle"
+      ],
+      "goals": [
+        {
+          "id": "401869427-g2",
+          "team": "home",
+          "scorer": "Kieran Morrison",
+          "assist": "Harvey Elliott",
+          "minute": 13,
+          "og": false
+        },
+        {
+          "id": "401869427-g4",
+          "team": "away",
+          "scorer": "Enzo Le Fée",
+          "assist": "Chris Rigg",
+          "minute": 28,
+          "og": false
+        },
+        {
+          "id": "401869427-g22",
+          "team": "away",
+          "scorer": "Tymur Tutierov",
+          "assist": "Jayden Jones",
+          "minute": 49,
+          "og": false
+        },
+        {
+          "id": "401869427-g23",
+          "team": "home",
+          "scorer": "Dominik Szoboszlai",
+          "assist": "",
+          "minute": 56,
+          "og": false
+        },
+        {
+          "id": "401869427-g30",
+          "team": "home",
+          "scorer": "Federico Chiesa",
+          "assist": "Calvin Ramsay",
+          "minute": 72,
+          "og": false
+        },
+        {
+          "id": "401869427-g31",
+          "team": "home",
+          "scorer": "Lewis Koumas",
+          "assist": "Dominik Szoboszlai",
+          "minute": 85,
+          "og": false
+        }
+      ],
       "league": "club.friendly"
     },
     {
@@ -255,8 +328,8 @@
       "note": "Bromley",
       "homeTeam": "Bromley",
       "awayTeam": "Crystal Palace",
-      "homeScore": null,
-      "awayScore": null,
+      "homeScore": 3,
+      "awayScore": 0,
       "homeLineup": [],
       "awayLineup": [],
       "goals": [],
@@ -268,11 +341,52 @@
       "note": "Auckland",
       "homeTeam": "Auckland FC",
       "awayTeam": "Tottenham",
-      "homeScore": null,
-      "awayScore": null,
-      "homeLineup": [],
-      "awayLineup": [],
-      "goals": [],
+      "homeScore": 0,
+      "awayScore": 2,
+      "homeLineup": [
+        "Michael Woud",
+        "Hiroki Sakai",
+        "Matthew D'Hotman De Villiers",
+        "Daniel Normann",
+        "Ronan Wynne",
+        "Luka Vicelich",
+        "Logan Rogerson",
+        "Cameron Howieson",
+        "Sam Cosgrove",
+        "Lachlan Bayliss",
+        "Van Fitzharris"
+      ],
+      "awayLineup": [
+        "Brandon Austin",
+        "Tye Hall",
+        "Rio Kyerematen",
+        "Archie Gray",
+        "Malachi Hardy",
+        "Kota Takai",
+        "Manor Solomon",
+        "Jamie Donley",
+        "Dane Scarlett",
+        "Luca Williams-Barnett",
+        "Mikey Moore"
+      ],
+      "goals": [
+        {
+          "id": "401867393-g1",
+          "team": "away",
+          "scorer": "Dane Scarlett",
+          "assist": "",
+          "minute": 12,
+          "og": false
+        },
+        {
+          "id": "401867393-g19",
+          "team": "away",
+          "scorer": "Richarlison",
+          "assist": "Mathys Tel",
+          "minute": 70,
+          "og": false
+        }
+      ],
       "league": "club.friendly"
     },
     {
@@ -281,8 +395,8 @@
       "note": "Tampa, Florida",
       "homeTeam": "Wrexham",
       "awayTeam": "Leeds United",
-      "homeScore": null,
-      "awayScore": null,
+      "homeScore": 3,
+      "awayScore": 2,
       "homeLineup": [],
       "awayLineup": [],
       "goals": [],
