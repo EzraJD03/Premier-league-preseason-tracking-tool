@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-07-30T08:13:51+00:00",
+    "lastUpdated": "2026-07-30T15:47:40+00:00",
     "source": "ESPN club friendlies + club schedules"
   },
   "matches": [
@@ -454,7 +454,7 @@
           "og": false
         },
         {
-          "id": "401902669-g15",
+          "id": "401902669-g16",
           "team": "home",
           "scorer": "Max Bird",
           "assist": "Jason Knight",
@@ -462,7 +462,7 @@
           "og": false
         },
         {
-          "id": "401902669-g27",
+          "id": "401902669-g28",
           "team": "away",
           "scorer": "Harvey Barnes",
           "assist": "Jacob Ramsey",
@@ -470,7 +470,7 @@
           "og": false
         },
         {
-          "id": "401902669-g28",
+          "id": "401902669-g29",
           "team": "home",
           "scorer": "Sven Botman",
           "assist": "",
@@ -532,6 +532,19 @@
       "note": "Harrison, New Jersey",
       "homeTeam": "Sunderland",
       "awayTeam": "Leeds United",
+      "homeScore": null,
+      "awayScore": null,
+      "homeLineup": [],
+      "awayLineup": [],
+      "goals": [],
+      "league": "club.friendly"
+    },
+    {
+      "id": "espn-401902746",
+      "date": "2026-07-31",
+      "note": "Como",
+      "homeTeam": "Crystal Palace",
+      "awayTeam": "Al Ula",
       "homeScore": null,
       "awayScore": null,
       "homeLineup": [],
@@ -636,6 +649,19 @@
       "note": "Mongkok, Kowloon",
       "homeTeam": "Bayern Munich",
       "awayTeam": "Aston Villa",
+      "homeScore": null,
+      "awayScore": null,
+      "homeLineup": [],
+      "awayLineup": [],
+      "goals": [],
+      "league": "club.friendly"
+    },
+    {
+      "id": "espn-401902745",
+      "date": "2026-08-07",
+      "note": "",
+      "homeTeam": "Fulham",
+      "awayTeam": "Crystal Palace",
       "homeScore": null,
       "awayScore": null,
       "homeLineup": [],
