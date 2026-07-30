@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-07-29T15:47:20+00:00",
+    "lastUpdated": "2026-07-30T08:13:51+00:00",
     "source": "ESPN club friendlies + club schedules"
   },
   "matches": [
@@ -403,16 +403,127 @@
       "league": "club.friendly"
     },
     {
+      "id": "espn-401902669",
+      "date": "2026-07-29",
+      "note": "Bristol",
+      "homeTeam": "Bristol City",
+      "awayTeam": "Newcastle",
+      "homeScore": 4,
+      "awayScore": 1,
+      "homeLineup": [
+        "Sam Tickle",
+        "George Tanner",
+        "Cameron Pring",
+        "Jason Knight",
+        "Robert Dickie",
+        "Lisav Eissat",
+        "Tomi Horvat",
+        "Adam Randell",
+        "Lorent Tolaj",
+        "Max Bird",
+        "Sam Greenwood"
+      ],
+      "awayLineup": [
+        "Ewen Jaouen",
+        "Jacob Murphy",
+        "Lewis Hall",
+        "Sean Steur",
+        "Fabian Schär",
+        "Sven Botman",
+        "Jacob Ramsey",
+        "Joe Willock",
+        "Sean Neave",
+        "Anthony Elanga",
+        "Harvey Barnes"
+      ],
+      "goals": [
+        {
+          "id": "401902669-g10",
+          "team": "home",
+          "scorer": "Sam Greenwood",
+          "assist": "",
+          "minute": 26,
+          "og": false
+        },
+        {
+          "id": "401902669-g11",
+          "team": "home",
+          "scorer": "Lorent Tolaj",
+          "assist": "",
+          "minute": 29,
+          "og": false
+        },
+        {
+          "id": "401902669-g15",
+          "team": "home",
+          "scorer": "Max Bird",
+          "assist": "Jason Knight",
+          "minute": 50,
+          "og": false
+        },
+        {
+          "id": "401902669-g27",
+          "team": "away",
+          "scorer": "Harvey Barnes",
+          "assist": "Jacob Ramsey",
+          "minute": 78,
+          "og": false
+        },
+        {
+          "id": "401902669-g28",
+          "team": "home",
+          "scorer": "Sven Botman",
+          "assist": "",
+          "minute": 81,
+          "og": true
+        }
+      ],
+      "league": "club.friendly"
+    },
+    {
       "id": "espn-401863532",
       "date": "2026-07-30",
       "note": "New York City",
       "homeTeam": "Liverpool",
       "awayTeam": "Wrexham",
-      "homeScore": null,
-      "awayScore": null,
-      "homeLineup": [],
-      "awayLineup": [],
-      "goals": [],
+      "homeScore": 1,
+      "awayScore": 0,
+      "homeLineup": [
+        "Giorgi Mamardashvili",
+        "Calvin Ramsay",
+        "Milos Kerkez",
+        "Dominik Szoboszlai",
+        "Ifeanyi Ndukwe",
+        "Luke Chambers",
+        "Joshua Abe",
+        "Trey Nyoni",
+        "Lewis Koumas",
+        "Harvey Elliott",
+        "Calum Scanlon"
+      ],
+      "awayLineup": [
+        "Danny Ward",
+        "Ryan Longman",
+        "George Thomason",
+        "Callum Doyle",
+        "Dan Scarr",
+        "Zak Vyner",
+        "Matty James",
+        "Lewis O'Brien",
+        "Sam Smith",
+        "Oliver Rathbone",
+        "Davis Kellior-Dunn"
+      ],
+      "goals": [
+        {
+          "id": "401863532-g21",
+          "team": "home",
+          "scorer": "Rio Ngumoha",
+          "assist": "Dominik Szoboszlai",
+          "minute": 75,
+          "og": false
+        }
+      ],
       "league": "club.friendly"
     },
     {
