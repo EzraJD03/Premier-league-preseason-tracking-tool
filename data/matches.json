@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-07-30T15:47:40+00:00",
+    "lastUpdated": "2026-07-31T08:40:51+00:00",
     "source": "ESPN club friendlies + club schedules"
   },
   "matches": [
@@ -532,8 +532,8 @@
       "note": "Harrison, New Jersey",
       "homeTeam": "Sunderland",
       "awayTeam": "Leeds United",
-      "homeScore": null,
-      "awayScore": null,
+      "homeScore": 0,
+      "awayScore": 1,
       "homeLineup": [],
       "awayLineup": [],
       "goals": [],
