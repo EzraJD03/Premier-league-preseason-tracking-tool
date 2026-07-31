@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-07-31T08:40:51+00:00",
+    "lastUpdated": "2026-07-31T15:59:19+00:00",
     "source": "ESPN club friendlies + club schedules"
   },
   "matches": [
@@ -829,8 +829,8 @@
       "id": "espn-401886562",
       "date": "2026-08-15",
       "note": "Wroclaw",
-      "homeTeam": "AC Milan",
-      "awayTeam": "Man Utd",
+      "homeTeam": "Man Utd",
+      "awayTeam": "AC Milan",
       "homeScore": null,
       "awayScore": null,
       "homeLineup": [],
