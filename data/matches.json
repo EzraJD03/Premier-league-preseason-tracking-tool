@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-08-01T08:10:29+00:00",
+    "lastUpdated": "2026-08-01T14:55:30+00:00",
     "source": "ESPN club friendlies + club schedules"
   },
   "matches": [
@@ -558,11 +558,60 @@
       "note": "Stockholm",
       "homeTeam": "Man Utd",
       "awayTeam": "Atlético Madrid",
-      "homeScore": null,
-      "awayScore": null,
-      "homeLineup": [],
-      "awayLineup": [],
-      "goals": [],
+      "homeScore": 2,
+      "awayScore": 1,
+      "homeLineup": [
+        "Tom Heaton",
+        "Leny Yoro",
+        "Luke Shaw",
+        "Mason Mount",
+        "Harry Maguire",
+        "Ayden Heaven",
+        "Amad Diallo",
+        "Andrey Santos",
+        "Bryan Mbeumo",
+        "Shea Lacey",
+        "Patrick Dorgu"
+      ],
+      "awayLineup": [
+        "Jan Oblak",
+        "Jorge Domínguez",
+        "Matteo Ruggeri",
+        "Obed Vargas",
+        "Robin Le Normand",
+        "Dávid Hancko",
+        "Carlos Martín",
+        "Koke",
+        "Arnau Ortiz",
+        "Jorge Castillo",
+        "Ademola Lookman"
+      ],
+      "goals": [
+        {
+          "id": "401869198-g1",
+          "team": "away",
+          "scorer": "Arnau Ortiz",
+          "assist": "Koke",
+          "minute": 5,
+          "og": false
+        },
+        {
+          "id": "401869198-g10",
+          "team": "home",
+          "scorer": "Bryan Mbeumo",
+          "assist": "",
+          "minute": 53,
+          "og": false
+        },
+        {
+          "id": "401869198-g26",
+          "team": "home",
+          "scorer": "Bryan Mbeumo",
+          "assist": "",
+          "minute": 74,
+          "og": false
+        }
+      ],
       "league": "club.friendly"
     },
     {
@@ -571,11 +620,52 @@
       "note": "Mongkok, Kowloon",
       "homeTeam": "Man City",
       "awayTeam": "Internazionale",
-      "homeScore": null,
-      "awayScore": null,
-      "homeLineup": [],
-      "awayLineup": [],
-      "goals": [],
+      "homeScore": 1,
+      "awayScore": 1,
+      "homeLineup": [
+        "Gianluigi Donnarumma",
+        "Rico Lewis",
+        "Stephen Mfuni",
+        "Tijjani Reijnders",
+        "Abdukodir Khusanov",
+        "Josko Gvardiol",
+        "Savinho",
+        "Mateo Kovacic",
+        "Divin Mubama",
+        "Phil Foden",
+        "Antoine Semenyo"
+      ],
+      "awayLineup": [
+        "Josep Martínez",
+        "Andy Diouf",
+        "Federico Dimarco",
+        "Carlos Augusto",
+        "Yann Bisseck",
+        "Benjamin Pavard",
+        "Nicolò Barella",
+        "Henrikh Mkhitaryan",
+        "Jamal Iddrissou",
+        "Pio Esposito",
+        "Aleksandar Stankovic"
+      ],
+      "goals": [
+        {
+          "id": "401871493-g1",
+          "team": "home",
+          "scorer": "Divin Mubama",
+          "assist": "Antoine Semenyo",
+          "minute": 14,
+          "og": false
+        },
+        {
+          "id": "401871493-g2",
+          "team": "away",
+          "scorer": "Benjamin Pavard",
+          "assist": "",
+          "minute": 20,
+          "og": false
+        }
+      ],
       "league": "club.friendly"
     },
     {
