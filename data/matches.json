@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-08-01T14:55:30+00:00",
+    "lastUpdated": "2026-08-02T08:12:00+00:00",
     "source": "ESPN club friendlies + club schedules"
   },
   "matches": [
@@ -674,11 +674,76 @@
       "note": "Girona",
       "homeTeam": "Girona",
       "awayTeam": "Arsenal",
-      "homeScore": null,
-      "awayScore": null,
-      "homeLineup": [],
-      "awayLineup": [],
-      "goals": [],
+      "homeScore": 1,
+      "awayScore": 4,
+      "homeLineup": [
+        "Paulo Gazzaniga",
+        "Arnau Martínez",
+        "Álex Moreno",
+        "Lancinet Kourouma",
+        "Alejandro Francés",
+        "David López",
+        "Bryan Gil",
+        "Fran Beltrán",
+        "Vladyslav Vanat",
+        "Donny van de Beek",
+        "Kim Min-Su"
+      ],
+      "awayLineup": [
+        "Kepa Arrizabalaga",
+        "Ben White",
+        "Riccardo Calafiori",
+        "Ethan Nwaneri",
+        "Cristhian Mosquera",
+        "Piero Hincapié",
+        "Myles Lewis-Skelly",
+        "Kai Havertz",
+        "Viktor Gyökeres",
+        "Max Dowman",
+        "Christos Tzolis"
+      ],
+      "goals": [
+        {
+          "id": "401886553-g1",
+          "team": "away",
+          "scorer": "Kai Havertz",
+          "assist": "Max Dowman",
+          "minute": 16,
+          "og": false
+        },
+        {
+          "id": "401886553-g2",
+          "team": "away",
+          "scorer": "Christos Tzolis",
+          "assist": "Riccardo Calafiori",
+          "minute": 30,
+          "og": false
+        },
+        {
+          "id": "401886553-g12",
+          "team": "home",
+          "scorer": "Arnau Martínez",
+          "assist": "Kim Min-Su",
+          "minute": 50,
+          "og": false
+        },
+        {
+          "id": "401886553-g13",
+          "team": "away",
+          "scorer": "Max Dowman",
+          "assist": "Myles Lewis-Skelly",
+          "minute": 53,
+          "og": false
+        },
+        {
+          "id": "401886553-g15",
+          "team": "away",
+          "scorer": "Gabriel Jesus",
+          "assist": "Ben White",
+          "minute": 55,
+          "og": false
+        }
+      ],
       "league": "club.friendly"
     },
     {
