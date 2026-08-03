@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-08-02T14:57:22+00:00",
+    "lastUpdated": "2026-08-03T09:32:20+00:00",
     "source": "ESPN club friendlies + club schedules"
   },
   "matches": [
@@ -752,11 +752,84 @@
       "note": "Chicago, Illinois",
       "homeTeam": "Liverpool",
       "awayTeam": "Leeds United",
-      "homeScore": null,
-      "awayScore": null,
-      "homeLineup": [],
-      "awayLineup": [],
-      "goals": [],
+      "homeScore": 2,
+      "awayScore": 4,
+      "homeLineup": [
+        "Giorgi Mamardashvili",
+        "Jeremie Frimpong",
+        "Milos Kerkez",
+        "Trey Nyoni",
+        "Ifeanyi Ndukwe",
+        "Luke Chambers",
+        "Kieran Morrison",
+        "Dominik Szoboszlai",
+        "Alexander Isak",
+        "Florian Wirtz",
+        "Rio Ngumoha"
+      ],
+      "awayLineup": [
+        "Alex Cairns",
+        "Jayden Bogle",
+        "Gabriel Gudmundsson",
+        "Tarik Muharemovic",
+        "Joe Rodon",
+        "James Justin",
+        "Ethan Ampadu",
+        "Ao Tanaka",
+        "Lukas Nmecha",
+        "Daniel James",
+        "Anton Stach"
+      ],
+      "goals": [
+        {
+          "id": "401863533-g5",
+          "team": "home",
+          "scorer": "Luke Chambers",
+          "assist": "Milos Kerkez",
+          "minute": 7,
+          "og": false
+        },
+        {
+          "id": "401863533-g12",
+          "team": "home",
+          "scorer": "Florian Wirtz",
+          "assist": "Jeremie Frimpong",
+          "minute": 40,
+          "og": false
+        },
+        {
+          "id": "401863533-g27",
+          "team": "away",
+          "scorer": "Brenden Aaronson",
+          "assist": "Ethan Ampadu",
+          "minute": 60,
+          "og": false
+        },
+        {
+          "id": "401863533-g32",
+          "team": "away",
+          "scorer": "Dominic Calvert-Lewin",
+          "assist": "Joe Rodon",
+          "minute": 71,
+          "og": false
+        },
+        {
+          "id": "401863533-g33",
+          "team": "away",
+          "scorer": "Sean Longstaff",
+          "assist": "Brenden Aaronson",
+          "minute": 73,
+          "og": false
+        },
+        {
+          "id": "401863533-g41",
+          "team": "away",
+          "scorer": "Dominic Calvert-Lewin",
+          "assist": "Sebastiaan Bornauw",
+          "minute": 85,
+          "og": false
+        }
+      ],
       "league": "club.friendly"
     },
     {
@@ -765,8 +838,8 @@
       "note": "Chester, Pennsylvania",
       "homeTeam": "Sunderland",
       "awayTeam": "Wrexham",
-      "homeScore": null,
-      "awayScore": null,
+      "homeScore": 1,
+      "awayScore": 0,
       "homeLineup": [],
       "awayLineup": [],
       "goals": [],
